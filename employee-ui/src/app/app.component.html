@@ -1,0 +1,139 @@
+<div class="container">
+  <form [formGroup]="employeeFormGroup" (ngSubmit)="onSubmit()">
+    <main>
+        <div class="row g-5">
+          <div class="col-md-9 col-lg-9">
+            <h4 class="mb-3">Employee Registration Form</h4>
+            <hr class="my-4">
+            <div formGroupName="employee" class="form-area">
+              <p-card styleClass="mb-3">
+                <div class="row g-3">
+                    <div class="col-sm-4">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input formControlName="firstName" type="text" class="form-control" id="firstName"
+                            placeholder="First Name">  
+                        <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)"
+                            class="alert alert-danger mt-1">
+                            <div *ngIf="firstName?.errors?.required">
+                                First name is required
+                            </div>
+                            <div *ngIf="firstName?.errors?.minlength">
+                                First name must be atleast 2 chracters long
+                            </div>                            
+                        </div>                      
+                    </div>
+                    <div class="col-sm-4">
+                      <label for="lastName" class="form-label">Last Number</label>
+                      <input formControlName="lastName" type="text" class="form-control" id="lastName"
+                          placeholder="Last Name">  
+                      <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)"
+                            class="alert alert-danger mt-1">
+                            <div *ngIf="lastName?.errors?.required">
+                                Last name is required
+                            </div>
+                            <div *ngIf="lastName?.errors?.minlength">
+                                Last name must be atleast 2 chracters long
+                            </div>                            
+                      </div>                    
+                    </div>
+                    <div class="col-sm-4">
+                      <label for="email" class="form-label">Email</label>
+                      <input formControlName="email" type="text" class="form-control" id="email"
+                          placeholder="Email">    
+                      <div *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+                          class="alert alert-danger mt-1">                         
+                          <div *ngIf="email?.errors?.pattern">
+                              Email must be a valid email address format
+                          </div>
+                      </div>                  
+                    </div>
+                    <div class="col-sm-4">
+                      <label for="phoneNumber" class="form-label">Phone Number</label>
+                      <input formControlName="phoneNumber" type="text" class="form-control" id="phoneNumber"
+                          placeholder="Phone Number">  
+                        <div *ngIf="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)"
+                          class="alert alert-danger mt-1">                                                    
+                          <div *ngIf="phoneNumber?.errors?.pattern">
+                              Phone number must contains only digits and dashes
+                          </div>
+                        </div>                      
+                    </div>
+                    <div class="col-sm-4">
+                      <label for="hireDate" class="form-label">Hire Date</label>
+                      <p-calendar styleClass="p-calendar-width" formControlName="hireDate" placeholder="mm/dd/yyyy"></p-calendar>                      
+                    </div>
+                    <div class="col-sm-4">
+                      <label for="salary" class="form-label">Salary</label>
+                      <input formControlName="salary" type="text" class="form-control" id="salary"
+                          placeholder="Salary">        
+                      <div *ngIf="salary?.invalid && (salary?.dirty || salary?.touched)"
+                          class="alert alert-danger mt-1">
+                          <div *ngIf="salary?.errors?.pattern">
+                            salary must contains only numeric values
+                          </div>                          
+                          <div *ngIf="salary?.errors?.min">
+                              Salary must be greater than 0
+                          </div>                            
+                      </div>                 
+                    </div>
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">Create New Employee</button>
+                  </div>
+                </p-card>
+              </div>
+          </div>
+        </div>
+        <div class="row g-5">
+          <div class="col-md-9 col-lg-9">
+            <h4 class="mb-3">Employees List</h4>
+            <hr class="my-4">
+            <div class="card">
+              <p-table dataKey="id" [value]="employees" [paginator]="true" [lazy]="true"
+              (onLazyLoad)="paginate($event)" [rows]="pageSize" [totalRecords]="totalElements" [loading]="loading"
+              [showCurrentPageReport]="true" responsiveLayout="scroll"
+              currentPageReportTemplate="Showing {first} to {last} of {{totalElements}} entries"
+              [rowsPerPageOptions]="rowsPerPageOptions" [pageLinks]="5" [autoLayout]="tableAutoLayout" [rowHover]="true">                
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Hire Date</th> 
+                    <th>Salary</th>     
+                  </tr>            
+                </ng-template>
+                <ng-template pTemplate="body" let-employee>
+                  <tr>
+                    <td>{{employee.firstName}}</td>
+                    <td>{{employee.lastName}}</td>
+                    <td>{{employee.email}}</td>
+                    <td>{{employee.phoneNumber}}</td>
+                    <td>{{employee.hireDate | date: 'MM-dd-yyyy'}}</td>
+                    <td>{{employee.salary | currency: 'USD'}}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+  
+          </div>
+        </div>
+    </main>
+  </form>
+  <!-- <p-card styleClass="mb-3">
+    <div class="row">
+      <div class="col-sm-8 mb-3">
+        <label for="link" class="form-label"><strong>Link</strong></label>
+        <input type="text" class="form-control" id="link"
+          placeholder="https://example.com/assets/category_B/subcategory_C/Foo/">
+      </div>
+      <div class="col-sm-2 mb-3 mt-1">
+        <label for="expiryDate"><strong>Expiry Date</strong></label>
+        <p-calendar styleClass="pt-1" inputId="expiryDate" dateFormat="dd-mm-yy">
+        </p-calendar>
+      </div>
+      <div class="col-sm-2 mt-4 mb-3">
+        <button class="btn btn-primary mt-2">Create</button>
+      </div>      
+    </div>
+  </p-card> -->
+</div>
